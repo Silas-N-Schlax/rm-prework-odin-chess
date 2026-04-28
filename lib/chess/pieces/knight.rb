@@ -5,10 +5,11 @@ class Knight < Piece
     [-2, -1], [-2, 1], [-1, 2], [1, 2], [2, 1], [2, -1], [1, -2], [-1, -2]
   ].freeze
 
-  def valid_move?(from, to)
+  def valid_move?(to)
+    pos = @position
     possible_moves = []
     DIRECTIONS.map do |dir|
-      possible_moves.push([from[0] + dir[0], from[1] + dir[1]])
+      possible_moves.push([pos[0] + dir[0], pos[1] + dir[1]])
     end
     return true if possible_moves.include?(to)
 
