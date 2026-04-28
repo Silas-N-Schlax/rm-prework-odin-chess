@@ -20,6 +20,9 @@ RSpec.describe Knight do
       it 'when space is [2, 2]' do
         expect(knight.valid_move?([2, 2])).to be true
       end
+      it 'when space is [7, 6]' do
+        expect(knight.valid_move?([6, 4], [7, 6]))
+      end
     end
     context 'returns false' do
       it 'when space is [0, 0]' do
