@@ -1,5 +1,6 @@
 require_relative '../spec_helper'
 require_relative '../../lib/chess/pieces/knight'
+require_relative '../../lib/chess/board'
 
 RSpec.describe Knight do
   let(:knight) { described_class.new('w', [0, 1]) }
@@ -13,20 +14,23 @@ RSpec.describe Knight do
   end
 
   describe '#valid_move' do
+    let(:board) { Board.new }
     context 'returns true' do
       it 'when space is [2, 0]' do
-        expect(knight.valid_move?([2, 0])).to be true
+        expect(knight.valid_move?(board, [2, 0])).to be true
       end
       it 'when space is [2, 2]' do
-        expect(knight.valid_move?([2, 2])).to be true
+        expect(knight.valid_move?(board, [2, 2])).to be true
       end
       it 'when space is [7, 6]' do
-        expect(knight.valid_move?([6, 4], [7, 6]))
+        board.board[7][6] = Knight.new('b', [7, 6])
+        p board.board[7][6]
+        expect(knight.valid_move?(board, [5, 5], [7, 6])).to be true
       end
     end
     context 'returns false' do
       it 'when space is [0, 0]' do
-        expect(knight.valid_move?([0, 0])).to be false
+        expect(knight.valid_move?(board, [0, 0])).to be false
       end
     end
   end
