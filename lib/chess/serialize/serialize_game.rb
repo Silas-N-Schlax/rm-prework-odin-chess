@@ -1,7 +1,10 @@
 # Save and Load game
 class SerializeGame
   def self.load
-    File.open(File.join(__dir__, 'save.dat'), 'rb') do |file|
+    path = File.join(__dir__, 'save.dat')
+    return nil unless File.exist?(path)
+
+    File.open(path, 'rb') do |file|
       Marshal.load(file)
     end
   end
