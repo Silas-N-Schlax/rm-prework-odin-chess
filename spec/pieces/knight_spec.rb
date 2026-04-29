@@ -24,7 +24,6 @@ RSpec.describe Knight do
       end
       it 'when space is [7, 6]' do
         board.board[7][6] = Knight.new('b', [7, 6])
-        p board.board[7][6]
         expect(knight.valid_move?(board, [5, 5], [7, 6])).to be true
       end
     end
