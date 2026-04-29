@@ -1,8 +1,11 @@
 require_relative 'piece'
+require_relative 'checkmate'
 Dir[File.join(__dir__, './pieces/*.rb')].sort.each { |file| require_relative file }
 # Board class
 class Board
   attr_accessor :board
+
+  include Checkmate
 
   def initialize
     middle_board = Array.new(4) { Array.new(8, nil) }
@@ -13,15 +16,20 @@ class Board
       create_pawn_row('w', 6),
       create_init_row('w', 7)
     ]
+    @kings = [@board[0][4], @board[7][4]]
   end
 
   def move_piece?(from, to, color)
     return false unless in_bounds?(from) && in_bounds?(to)
+
     piece = piece_at(from)
-    if piece.valid_move?(to)
+    return false if piece.color != color
+
+    if piece.valid_move?(self, to)
       new_space = piece_at(to)
 
       return false if piece.color.nil? || piece.color != color
+      return false if check?(color)
       return true if new_space.nil? || piece.color != new_space.color
     end
     false
@@ -45,7 +53,25 @@ class Board
     pos[0].between?(0, 7) && pos[1].between?(0, 7)
   end
 
+  def check?(color)
+    king = find_king(color)
+    pieces_of(color == 'b' ? 'w' : 'b').each do |item|
+      return true if item.valid_move?(self, king.position)
+    end
+    false
+  end
+
   private
+
+  def find_king(color)
+    @board.flatten.compact.find do |piece|
+      piece.is_a?(King) && piece.color == color
+    end
+  end
+
+  def pieces_of(color)
+    @board.flatten.compact.select { |item| item.color == color }
+  end
 
   def create_init_row(col, row)
     [
@@ -64,13 +90,3 @@ class Board
     row_ary
   end
 end
-
-# board = Board.new
-# p board.board[0][1]
-# p board.board[2][0]
-# p board.update_board([0, 1], [2, 0], 'b')
-# p board.move_piece?([2, 0], [4, 3], 'b')
-# # board.update_board([4, 3], [6, 4], 'b')
-# # p board.board[0][1]
-# # p board.board[2][0]
-# # p board.board[4][3]
