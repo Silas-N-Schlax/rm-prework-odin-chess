@@ -19,6 +19,12 @@ class Game
   end
 
   def round
+    puts '
+    To save a game: save (s)
+    To load a game: load (l)
+    To Exit the game: exit (e)
+    (Game will auto start in 3 seconds...)'.yellow
+    sleep(3)
     @board.send_board
     loop do
       print "#{@player_turn.name} (#{@player_turn.color}) please enter your move -> ".magenta
@@ -57,8 +63,9 @@ class Game
   end
 
   def load_game
-    restore_game_state(SerializeGame.load)
-    puts 'GAME LOADED!'.blue
+    restored = restore_game_state(SerializeGame.load)
+
+    puts restored ? 'GAME LOADED!'.blue : 'NO GAME SAVED'.red
     sleep(3)
     @board.send_board
     print "#{@player_turn.name} (#{@player_turn.color}) please enter your move -> ".magenta
@@ -74,6 +81,8 @@ class Game
   end
 
   def restore_game_state(state)
+    return nil if state.nil?
+
     @board = state[:board]
     @player1 = state[:player1]
     @player2 = state[:player2]
