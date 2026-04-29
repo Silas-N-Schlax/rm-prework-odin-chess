@@ -1,8 +1,8 @@
 require_relative '../piece'
 # Pawn class
 class Pawn < Piece
-  def board_piece
-    @color == 'b' ? '♟' : '♙'
+  def board_piece(color)
+    color == 'b' ? '♟' : '♙'
   end
 
   def valid_move?(board, to, pos = @position)
@@ -13,6 +13,7 @@ class Pawn < Piece
     return capture?(board, to, y_step, pos) unless dir_x.zero?
 
     return false if (dir_y.negative? && !y_step.negative?) || (!dir_y.negative? && y_step.negative?)
+
     y, x = pos
     if dir_y == y_step
       return true if board.piece_at([y + y_step, x]).nil?

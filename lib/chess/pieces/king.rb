@@ -1,8 +1,8 @@
 require_relative '../piece'
 # Pawn class
 class King < Piece
-  def board_piece
-    @color == 'b' ? '♚' : '♔'
+  def board_piece(color)
+    color == 'b' ? '♚' : '♔'
   end
 
   def valid_move?(board, to, pos = @position)

@@ -5,8 +5,8 @@ class Knight < Piece
     [-2, -1], [-2, 1], [-1, 2], [1, 2], [2, 1], [2, -1], [1, -2], [-1, -2]
   ].freeze
 
-  def board_piece
-    @color == 'b' ? '♞' : '♘'
+  def board_piece(color)
+    color == 'b' ? '♞' : '♘'
   end
 
   def valid_move?(board, to, pos = @position)
