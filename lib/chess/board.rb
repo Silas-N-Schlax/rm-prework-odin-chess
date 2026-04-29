@@ -1,11 +1,13 @@
 require_relative 'piece'
-require_relative 'checkmate'
+require_relative 'board/checkmate'
+require_relative 'board/send_board'
 Dir[File.join(__dir__, './pieces/*.rb')].sort.each { |file| require_relative file }
 # Board class
 class Board
   attr_accessor :board
 
   include Checkmate
+  include SendBoard
 
   def initialize
     middle_board = Array.new(4) { Array.new(8, nil) }
