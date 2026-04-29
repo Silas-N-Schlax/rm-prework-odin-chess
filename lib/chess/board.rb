@@ -25,13 +25,13 @@ class Board
     return false unless in_bounds?(from) && in_bounds?(to)
 
     piece = piece_at(from)
-    return false if piece.color != color
+    return false if piece&.color != color
 
     if piece.valid_move?(self, to)
       new_space = piece_at(to)
 
       return false if piece.color.nil? || piece.color != color
-      return false if check?(color)
+      return false unless valid_move?(from, to)
       return true if new_space.nil? || piece.color != new_space.color
     end
     false
@@ -44,6 +44,8 @@ class Board
     piece.position = to
     @board[to[0]][to[1]] = piece
     @board[from[0]][from[1]] = nil
+    send_board
+    true
   end
 
   def piece_at(pos)
