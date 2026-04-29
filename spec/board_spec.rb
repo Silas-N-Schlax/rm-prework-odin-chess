@@ -162,14 +162,15 @@ RSpec.describe Board do
     context 'when white king is in check' do
       let(:board_checkmate) { described_class.new }
       before do
-        board_checkmate.board[2][4] = Queen.new('b', [2, 4])
-        board_checkmate.board[6][4] = nil
-        board_checkmate.board[7][2] = nil
-        board_checkmate.board[7][3] = Pawn.new('w', [7, 3])
-        board_checkmate.board[7][6] = nil
+        board_checkmate.update_board([1, 4], [2, 4], 'b')
+        board_checkmate.update_board([6, 5], [5, 5], 'w')
+        board_checkmate.update_board([0, 3], [4, 7], 'b')
+        board_checkmate.update_board([6, 6], [5, 6], 'w')
+        board_checkmate.update_board([4, 7], [3, 6], 'b')
+        board_checkmate.update_board([5, 6], [4, 6], 'w')
       end
       it 'returns true when king is in checkmate' do
-        board_checkmate.board[7][5] = Pawn.new('w', [7, 3])
+        board_checkmate.update_board([3, 6], [4, 7], 'b')
         expect(board_checkmate.checkmate?('w')).to be true
       end
       it 'returns false when king is not in checkmate' do
