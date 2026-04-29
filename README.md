@@ -62,8 +62,42 @@ Bundle
 bundle install
 ```
 
-Run `ruby test.rb` in your terminal.
+Run `ruby chess.rb` in your terminal.
 
+---
+
+# How to Use the Program
+
+Run `ruby chess.rb` to start the program.
+
+* Type `load` or `l` to load a saved game.
+* Type `save` or `s` to save a game.
+* Type `exit` or `e` to end the game at any time.
+
+## Input and how to play
+
+Input is weird, my game is like a toddler, it likes to tell you no, but they refused to tell you why...
+The easy thing to remember is you have two required inputs seperated by a comma. The first is the starting
+piece, the second is the destination you want it.
+
+### Example: (assume starting board on black's first move)
+
+You (black) want to move your left Knight on `[2, 1]` to `[1, 3]`
+Good, you got that far, now you have to remove some characters and spaces and oyu will be good.
+
+So valid input would look like `21,13`.
+
+The computer then takes that and does the following translations. *Yes I know is backwards, I didn't realize till it was too late...*
+
+1. `['21', '13]` - Split at the comma.
+2. `[['2', '1'], ['1', '3']]` - Split each group.
+3. `[[2, 1], [1, 3]]` - Switch to number (to_i).
+4. `[[1, 2], [3, 1]]` - Flip [x, y] to [y, x] (*I TOLD YOU I KNOW!*).
+5. `[[0, 1], [2, 0]]` - Subtract 1 for indexing.
+
+And then the computers does more with it and tells moves the piece if its valid (*hint, this one is*;)
+
+![Picture of board at starting positions](/board_design.png)
 ---
 
 # Reflection
@@ -78,7 +112,6 @@ Things I would improve in a future iteration:
 
 * Add the more obcure rules of Chess.
 * Better UI that is readable...
-* **Note:** My game *is* user friendly...its just like a toddler, it tells you no but won't say why 🙃
 
 ---
 
