@@ -5,6 +5,10 @@ class Knight < Piece
     [-2, -1], [-2, 1], [-1, 2], [1, 2], [2, 1], [2, -1], [1, -2], [-1, -2]
   ].freeze
 
+  def board_piece
+    @color == 'b' ? '♞' : '♘'
+  end
+
   def valid_move?(board, to, pos = @position)
     possible_moves = DIRECTIONS.map { |dr, dc| [pos[0] + dr, pos[1] + dc] }
     if possible_moves.include?(to)
